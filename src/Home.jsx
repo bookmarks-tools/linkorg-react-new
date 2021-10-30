@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useLocalStorage } from '@rehooks/local-storage';
 import { Button, TextField } from '@mui/material';
 
-import { Posts } from './Posts';
+import { PostList } from './PostList';
 import { httpClient } from './httpClient';
 import { detectProvider } from './providerHelper';
 import { TagSelect } from './TsgSelect';
@@ -11,6 +11,7 @@ import { TagSelect } from './TsgSelect';
 export const Home = () => {
   const [counterValue] = useLocalStorage('accessToken');
   const [url, setUrl] = useState();
+  const [postTags, setPostTags] = useState([]);
 
   const handleAddPost = () => {
     const provider = detectProvider(url);
@@ -18,11 +19,16 @@ export const Home = () => {
       .post('/post', {
         href: url,
         provider: provider,
-        tags: ['4'],
+        tags: postTags.map((tag) => tag.id),
       })
       .then(({ data }) => {
         console.log(data);
       });
+  };
+
+  const handleTagChange = (tags) => {
+    console.log(tags);
+    setPostTags(tags);
   };
 
   return (
@@ -35,9 +41,9 @@ export const Home = () => {
               add
             </Button>
           </div>
-          <TagSelect />
+          <TagSelect onTagsChange={handleTagChange} />
 
-          <Posts />
+          <PostList />
         </div>
       ) : (
         <div>Login</div>

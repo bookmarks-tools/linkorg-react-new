@@ -7,7 +7,7 @@ import { httpClient } from './httpClient';
 
 const filter = createFilterOptions();
 
-export const TagSelect = () => {
+export const TagSelect = ({ onTagsChange }) => {
   const [selectedValue, setSelectedValue] = useState([]);
 
   const [tags, setTags] = useState([]);
@@ -28,6 +28,10 @@ export const TagSelect = () => {
         setTags([...tags, data]);
       });
   };
+
+  useEffect(() => {
+    onTagsChange(selectedValue);
+  }, [selectedValue]);
 
   return (
     <Autocomplete
@@ -59,6 +63,7 @@ export const TagSelect = () => {
       clearOnBlur
       handleHomeEndKeys
       multiple
+      size="small"
       id="free-solo-with-text-demo"
       options={tags}
       onKeyDown={(event) => {
@@ -79,7 +84,7 @@ export const TagSelect = () => {
       renderOption={(props, option) => <li {...props}>{option.name}</li>}
       sx={{ width: 300 }}
       freeSolo
-      renderInput={(params) => <TextField {...params} label="Free solo with text demo" />}
+      renderInput={(params) => <TextField {...params} label="Select tag" />}
     />
   );
 };
