@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useLocalStorage } from '@rehooks/local-storage';
 import { Button, TextField } from '@mui/material';
@@ -13,6 +13,15 @@ export const Home = () => {
   const [url, setUrl] = useState();
   const [postTags, setPostTags] = useState([]);
 
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    httpClient.get('/post').then(({ data }) => {
+      console.log(data);
+      setPosts(data);
+    });
+  }, []);
+
   const handleAddPost = () => {
     const provider = detectProvider(url);
     httpClient
@@ -22,13 +31,17 @@ export const Home = () => {
         tags: postTags.map((tag) => tag.id),
       })
       .then(({ data }) => {
-        console.log(data);
+        setPosts([data, ...posts]);
       });
   };
 
   const handleTagChange = (tags) => {
     console.log(tags);
     setPostTags(tags);
+  };
+
+  const handleDelete = (postId) => {
+    setPosts(posts.filter((post) => postId !== post.id));
   };
 
   return (
@@ -43,7 +56,7 @@ export const Home = () => {
           </div>
           <TagSelect onTagsChange={handleTagChange} />
 
-          <PostList />
+          <PostList posts={posts} onDelete={handleDelete} />
         </div>
       ) : (
         <div>Login</div>

@@ -7,7 +7,7 @@ import { httpClient } from './httpClient';
 
 const filter = createFilterOptions();
 
-export const TagSelect = ({ onTagsChange }) => {
+export const TagSelect = ({ onTagsChange, selected }) => {
   const [selectedValue, setSelectedValue] = useState([]);
 
   const [tags, setTags] = useState([]);
@@ -17,6 +17,12 @@ export const TagSelect = ({ onTagsChange }) => {
       setTags(data);
     });
   }, []);
+
+  useEffect(() => {
+    if (selected) {
+      setSelectedValue(selected);
+    }
+  }, [selected]);
 
   const handleTagCreate = (tagName) => {
     httpClient

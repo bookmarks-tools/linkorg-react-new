@@ -3,20 +3,11 @@ import { useEffect, useState } from 'react';
 import { httpClient } from './httpClient';
 import { Post } from './Post';
 
-export const PostList = () => {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    httpClient.get('/post').then(({ data }) => {
-      console.log(data);
-      setPosts(data);
-    });
-  }, []);
-
+export const PostList = ({ posts, onDelete }) => {
   return (
     <>
       {posts.map((post) => (
-        <Post key={post.id} post={post} />
+        <Post key={post.id} post={post} onDelete={() => onDelete(post.id)} />
       ))}
     </>
   );

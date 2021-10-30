@@ -1,3 +1,7 @@
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+
 import { Twitter } from './providers/Twitter';
 import { Reddit } from './providers/Reddit';
 import Telegram from './providers/Telegram';
@@ -7,7 +11,10 @@ import { Github } from './providers/Github';
 import { Video } from './providers/Video';
 import { Instagram } from './providers/Instagram';
 
-export const Post = ({ post }) => {
+import { httpClient } from './httpClient';
+import { TagSelect } from './TsgSelect';
+
+export const Post = ({ post, onDelete }) => {
   const providers = {
     twitter: Twitter,
     reddit: Reddit,
@@ -21,5 +28,44 @@ export const Post = ({ post }) => {
 
   const ComponentName = providers[post.provider];
 
-  return <ComponentName href={post.href} />;
+  const handleDelete = () => {
+    httpClient.delete(`/post/${post.id}`).then(onDelete);
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(post.href);
+  };
+
+  const handleTagChange = (tags) => {
+    console.log(tags);
+    httpClient
+      .put(`/post/${post.id}`, {
+        ...post,
+        tags: tags.map((tag) => tag.id),
+      })
+      .then(({ data }) => {
+        console.log(data);
+      });
+  };
+
+  return (
+    <div>
+      <div style={{ display: 'flex' }}>
+        <ComponentName href={post.href} />
+        <div>
+          <div>
+            <IconButton onClick={handleDelete}>
+              <DeleteIcon />
+            </IconButton>
+          </div>
+          <div>
+            <IconButton onClick={handleCopy}>
+              <ContentCopyIcon />
+            </IconButton>
+          </div>
+        </div>
+      </div>
+      <TagSelect selected={post.tags} onTagsChange={handleTagChange} />
+    </div>
+  );
 };
