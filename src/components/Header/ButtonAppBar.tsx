@@ -8,9 +8,11 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { UserInfo } from '../../features/user/UserType';
 
 export function ButtonAppBar() {
-  const [accessToken] = useLocalStorage('accessToken');
+  const [userInfo] = useLocalStorage<UserInfo>('user');
+  // TODO: why didn't updated after login?
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -19,12 +21,16 @@ export function ButtonAppBar() {
           {/*<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>*/}
           {/*  <MenuIcon />*/}
           {/*</IconButton>*/}
-
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to="/">LinkORG</Link>
           </Typography>
 
-          {!accessToken && (
+          {userInfo && (
+            <div>
+              {userInfo.user.firstName} {userInfo.user.lastName}
+            </div>
+          )}
+          {!userInfo && (
             <>
               <Button component={Link} to="/login" color="inherit">
                 Login

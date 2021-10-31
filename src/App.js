@@ -1,7 +1,8 @@
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 import { Register } from './features/register/Register';
 import { Login } from './features/login/Login';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Home } from './features/main/Home';
+import { AuthWrapper } from './features/authWrapper/AuthWrapper';
 import { ButtonAppBar } from './components/Header/ButtonAppBar';
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
             <Register />
           </Route>
           <Route path="/">
-            <Home />
+            <AuthWrapper />
           </Route>
         </Switch>
       </div>

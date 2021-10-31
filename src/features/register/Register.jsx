@@ -1,12 +1,13 @@
-import axios from 'axios';
 import { Box, Button, TextField } from '@mui/material';
+
+import { httpClient } from '../../app/httpClient';
 
 export const Register = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const formFields = Object.fromEntries(formData);
-    axios.post('http://localhost:3000/api/auth/register', formFields).then(({ data }) => {
+    httpClient.post('/auth/register', formFields).then(({ data }) => {
       console.log(data);
     });
   };

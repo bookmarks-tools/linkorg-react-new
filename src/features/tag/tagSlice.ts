@@ -1,5 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { RootState } from '../../app/store';
+import { fetchTags } from './tagAPI';
 
 export interface CounterState {
   tags: any[];
@@ -8,6 +10,12 @@ export interface CounterState {
 const initialState: CounterState = {
   tags: [],
 };
+
+export const getTags = createAsyncThunk('tag/fetchTags', async (_, thunkAPI) => {
+  const response = await fetchTags();
+  thunkAPI.dispatch(setTags(response.data));
+  return response.data;
+});
 
 export const tagSlice = createSlice({
   name: 'tag',

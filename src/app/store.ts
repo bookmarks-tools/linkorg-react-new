@@ -1,9 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+
 import tagReducer from '../features/tag/tagSlice';
+import userSlice from '../features/user/userSlice';
 
 export const store = configureStore({
   reducer: {
     tag: tagReducer,
+    user: userSlice,
   },
 });
 

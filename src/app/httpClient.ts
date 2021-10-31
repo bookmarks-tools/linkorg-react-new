@@ -6,7 +6,10 @@ export const httpClient = axios.create({
 
 httpClient.interceptors.request.use(
   (originalRequest) => {
-    originalRequest.headers['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
+    originalRequest.headers['Authorization'] = `Bearer ${String(localStorage.getItem('accessToken')).replace(
+      /['"]+/g,
+      ''
+    )}`;
     return originalRequest;
   },
   (err) => {

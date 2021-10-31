@@ -3,17 +3,20 @@ import { useHistory } from 'react-router-dom';
 
 import { httpClient } from '../../app/httpClient';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { UserInfo } from '../user/UserType';
 
 export const Login = () => {
   const history = useHistory();
   const [accessToken, setAccessToken] = useLocalStorage('accessToken');
+  const [user, setUser] = useLocalStorage<UserInfo>('user');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const formFields = Object.fromEntries(formData);
     httpClient.post('/auth/login', formFields).then(({ data }) => {
       setAccessToken(data.accessToken);
+      setUser(data);
       history.push('/');
     });
   };
