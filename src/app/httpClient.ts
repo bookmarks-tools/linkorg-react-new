@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const httpClient = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: process.env.REACT_APP_BASE_URL,
   paramsSerializer: (params) => {
     const queryObject = Object.entries(params).reduce(function (total: Record<string, string>, [key, value]) {
       if (Array.isArray(value) && value.length) {

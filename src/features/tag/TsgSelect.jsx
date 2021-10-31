@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { TextField } from '@mui/material';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
@@ -8,6 +8,11 @@ import { selectTags, setTags } from './tagSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 const filter = createFilterOptions();
+
+// type TagSelectProps = {
+//   onTagsChange: (tags: TagType[]) => void
+//   selected: TagType[]
+// }
 
 export const TagSelect = ({ onTagsChange, selected }) => {
   const [selectedValue, setSelectedValue] = useState([]);

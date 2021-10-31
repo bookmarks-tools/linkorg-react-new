@@ -156,13 +156,15 @@ export const Main = () => {
         <PostList posts={posts} onDelete={handleDelete} />
       </div>
 
-      <div className="mb-25 d-flex justify-center">
-        <Card>
-          <CardContent>
-            <Pagination count={postsData?.meta?.totalPages} page={page} onChange={handleChange} />
-          </CardContent>
-        </Card>
-      </div>
+      {Boolean(postsData?.meta?.totalPages) && (
+        <div className="mb-25 d-flex justify-center">
+          <Card>
+            <CardContent>
+              <Pagination count={postsData?.meta?.totalPages} page={page} onChange={handleChange} />
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,3 +1,5 @@
+scp -r /Users/andrejorehov/WebstormProjects/react-nest/build ssh root@188.166.127.245:/root/proj/nest-beck
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
