@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-color: #ebeef2;
 }
 
 code {
@@ -17,7 +19,6 @@ a {
   cursor: pointer;
   color: inherit;
 }
-
 
 a,
 a:hover {
@@ -102,13 +103,18 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   display: flex;
 }
 
+.justify-center {
+  justify-content: center;
+}
 
+.self-center {
+  align-self: center;
+}
 
 .wrapper {
   margin-right: auto;
   margin-left:  auto;
   margin-top: 20px;
-
 
   max-width: 960px;
 

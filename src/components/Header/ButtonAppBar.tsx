@@ -26,9 +26,9 @@ export function ButtonAppBar() {
           </Typography>
 
           {userInfo && (
-            <div>
+            <Typography component="div">
               {userInfo.user.firstName} {userInfo.user.lastName}
-            </div>
+            </Typography>
           )}
           {!userInfo && (
             <>

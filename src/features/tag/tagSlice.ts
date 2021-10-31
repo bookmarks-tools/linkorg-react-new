@@ -2,9 +2,10 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '../../app/store';
 import { fetchTags } from './tagAPI';
+import type { TagType } from './TagType';
 
 export interface CounterState {
-  tags: any[];
+  tags: TagType[];
 }
 
 const initialState: CounterState = {
@@ -21,7 +22,7 @@ export const tagSlice = createSlice({
   name: 'tag',
   initialState,
   reducers: {
-    setTags: (state, action: PayloadAction<any[]>) => {
+    setTags: (state, action: PayloadAction<TagType[]>) => {
       state.tags = action.payload;
     },
   },

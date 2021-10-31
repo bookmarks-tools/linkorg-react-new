@@ -9,15 +9,16 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 const filter = createFilterOptions();
 
-export const TagSelect = ({ onTagsChange, selected = [] }) => {
+export const TagSelect = ({ onTagsChange, selected }) => {
   const [selectedValue, setSelectedValue] = useState([]);
   const availableTags = useAppSelector(selectTags);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (selected.length) {
-      console.log('setSelectedValue');
       setSelectedValue(selected);
+    } else {
+      setSelectedValue([]);
     }
   }, [selected]);
 

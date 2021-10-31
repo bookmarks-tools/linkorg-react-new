@@ -2,6 +2,18 @@ import axios from 'axios';
 
 export const httpClient = axios.create({
   baseURL: 'http://localhost:3000/api',
+  paramsSerializer: (params) => {
+    const queryObject = Object.entries(params).reduce(function (total: Record<string, string>, [key, value]) {
+      if (Array.isArray(value) && value.length) {
+        total[key] = value.join(',');
+      } else if (!Array.isArray(value)) {
+        total[key] = value as string;
+      }
+      return total;
+    }, {});
+    const searchParams = new URLSearchParams(queryObject);
+    return searchParams.toString();
+  },
 });
 
 httpClient.interceptors.request.use(

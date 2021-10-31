@@ -1,4 +1,4 @@
-const providers = {
+const providers: Record<string, RegExp> = {
   twitter: RegExp('twitter'),
   reddit: RegExp('reddit'),
   youtube: RegExp('youtube'),
@@ -9,6 +9,6 @@ const providers = {
   video: RegExp('.mp4'),
 };
 
-export const detectProvider = (url) => {
+export const detectProvider = (url: string) => {
   return Object.keys(providers).find((provider) => providers[provider].test(url));
 };

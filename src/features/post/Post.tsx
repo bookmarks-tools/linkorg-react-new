@@ -1,3 +1,4 @@
+import React from 'react';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -10,12 +11,18 @@ import { Image } from '../../components/providers/Image';
 import { Github } from '../../components/providers/Github';
 import { Video } from '../../components/providers/Video';
 import { Instagram } from '../../components/providers/Instagram';
-
 import { httpClient } from '../../app/httpClient';
 import { TagSelect } from '../tag/TsgSelect';
+import { PostType } from './PostType';
+import { TagType } from '../tag/TagType';
 
-export const Post = ({ post, onDelete }) => {
-  const providers = {
+type PostListProps = {
+  post: PostType;
+  onDelete: () => void;
+};
+
+export const Post: React.FC<PostListProps> = ({ post, onDelete }) => {
+  const providers: Record<string, any> = {
     twitter: Twitter,
     reddit: Reddit,
     telegram: Telegram,
@@ -36,7 +43,7 @@ export const Post = ({ post, onDelete }) => {
     navigator.clipboard.writeText(post.href);
   };
 
-  const handleTagChange = (tags) => {
+  const handleTagChange = (tags: TagType[]) => {
     httpClient
       .put(`/post/${post.id}`, {
         ...post,
@@ -53,13 +60,13 @@ export const Post = ({ post, onDelete }) => {
         <ComponentName href={post.href} />
         <div className="ml-10">
           <div>
-            <IconButton onClick={handleDelete}>
-              <DeleteIcon />
+            <IconButton onClick={handleCopy}>
+              <ContentCopyIcon />
             </IconButton>
           </div>
           <div>
-            <IconButton onClick={handleCopy}>
-              <ContentCopyIcon />
+            <IconButton onClick={handleDelete}>
+              <DeleteIcon />
             </IconButton>
           </div>
         </div>
