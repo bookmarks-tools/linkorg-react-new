@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-export function Telegram({ href }) {
-  const [postPath, setPostPath] = useState([]);
+import { ProviderProp } from './ProviderProp';
+
+export const Telegram: React.FC<ProviderProp> = ({ href }) => {
+  const [postPath, setPostPath] = useState('');
 
   useEffect(() => {
     setPostPath(`${href}?embed=1`);
@@ -16,6 +18,6 @@ export function Telegram({ href }) {
   };
 
   return <iframe src={`${href}?embed=1`} height="476px" id="telegram-post" style={styles}></iframe>;
-}
+};
 
 export default Telegram;

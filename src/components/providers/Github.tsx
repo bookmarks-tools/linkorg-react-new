@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-export function Github({ href }) {
-  const [repoPath, setRepoPath] = useState([]);
+import type { ProviderProp } from './ProviderProp';
+
+export const Github: React.FC<ProviderProp> = ({ href }) => {
+  const [repoPath, setRepoPath] = useState('');
 
   useEffect(() => {
     setRepoPath(new URL(href).pathname.replace('/', ''));
@@ -12,4 +14,4 @@ export function Github({ href }) {
       <div className="github-card" data-github={repoPath} data-width="400" data-height="" data-theme="default" />
     </div>
   );
-}
+};

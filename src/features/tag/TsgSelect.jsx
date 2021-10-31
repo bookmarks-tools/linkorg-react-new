@@ -3,23 +3,20 @@ import { useEffect, useState } from 'react';
 import { TextField } from '@mui/material';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
-import { httpClient } from './httpClient';
+import { httpClient } from '../../app/httpClient';
+import { selectTags, setTags } from './tagSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 const filter = createFilterOptions();
 
-export const TagSelect = ({ onTagsChange, selected }) => {
+export const TagSelect = ({ onTagsChange, selected = [] }) => {
   const [selectedValue, setSelectedValue] = useState([]);
-
-  const [tags, setTags] = useState([]);
-
-  useEffect(() => {
-    httpClient.get('/tag').then(({ data }) => {
-      setTags(data);
-    });
-  }, []);
+  const availableTags = useAppSelector(selectTags);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (selected) {
+    if (selected.length) {
+      console.log('setSelectedValue');
       setSelectedValue(selected);
     }
   }, [selected]);
@@ -30,14 +27,12 @@ export const TagSelect = ({ onTagsChange, selected }) => {
         name: tagName,
       })
       .then(({ data }) => {
-        setSelectedValue([...selectedValue, data]);
-        setTags([...tags, data]);
+        const newSelectedTags = [...selectedValue, data];
+        setSelectedValue(newSelectedTags);
+        onTagsChange(newSelectedTags);
+        dispatch(setTags([...availableTags, data]));
       });
   };
-
-  useEffect(() => {
-    onTagsChange(selectedValue);
-  }, [selectedValue]);
 
   return (
     <Autocomplete
@@ -48,6 +43,7 @@ export const TagSelect = ({ onTagsChange, selected }) => {
           handleTagCreate(newOption.inputValue);
         } else {
           setSelectedValue(newValue);
+          onTagsChange(newValue);
         }
       }}
       filterOptions={(options, params) => {
@@ -70,11 +66,9 @@ export const TagSelect = ({ onTagsChange, selected }) => {
       handleHomeEndKeys
       multiple
       size="small"
-      id="free-solo-with-text-demo"
-      options={tags}
+      options={availableTags}
       onKeyDown={(event) => {
         if (event.key === 'Enter') {
-          // Prevent's default 'Enter' behavior.
           event.defaultMuiPrevented = true;
           handleTagCreate(event.target.value);
         }

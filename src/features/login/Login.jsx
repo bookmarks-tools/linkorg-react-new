@@ -1,17 +1,19 @@
-import axios from 'axios';
 import { Box, Button, TextField } from '@mui/material';
 import { useHistory } from 'react-router-dom';
-import { writeStorage } from '@rehooks/local-storage';
+
+import { httpClient } from '../../app/httpClient';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 export const Login = () => {
   const history = useHistory();
+  const [accessToken, setAccessToken] = useLocalStorage('accessToken');
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const formFields = Object.fromEntries(formData);
-    axios.post('http://localhost:3000/api/auth/login', formFields).then(({ data }) => {
-      writeStorage('accessToken', data.accessToken);
+    httpClient.post('/auth/login', formFields).then(({ data }) => {
+      setAccessToken(data.accessToken);
       history.push('/');
     });
   };

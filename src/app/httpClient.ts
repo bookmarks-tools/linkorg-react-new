@@ -13,3 +13,17 @@ httpClient.interceptors.request.use(
     return Promise.reject(err);
   }
 );
+
+httpClient.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    if (error.response.data.statusCode === 401) {
+      console.log('EXPIRED TOKEN!');
+      localStorage.clear();
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);

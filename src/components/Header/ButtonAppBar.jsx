@@ -7,18 +7,16 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+
 export function ButtonAppBar() {
+  const [accessToken] = useLocalStorage('accessToken');
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          {/*<IconButton*/}
-          {/*  size="large"*/}
-          {/*  edge="start"*/}
-          {/*  color="inherit"*/}
-          {/*  aria-label="menu"*/}
-          {/*  sx={{ mr: 2 }}*/}
-          {/*>*/}
+          {/*<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>*/}
           {/*  <MenuIcon />*/}
           {/*</IconButton>*/}
 
@@ -26,12 +24,16 @@ export function ButtonAppBar() {
             <Link to="/">LinkORG</Link>
           </Typography>
 
-          <Button component={Link} to="/login" color="inherit">
-            Login
-          </Button>
-          <Button component={Link} to="/register" color="inherit">
-            Register
-          </Button>
+          {!accessToken && (
+            <>
+              <Button component={Link} to="/login" color="inherit">
+                Login
+              </Button>
+              <Button component={Link} to="/register" color="inherit">
+                Register
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

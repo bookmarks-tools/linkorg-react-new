@@ -1,8 +1,8 @@
-import { Register } from './Register';
-import { Login } from './Login';
+import { Register } from './features/register/Register';
+import { Login } from './features/login/Login';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Home } from './Home';
-import { ButtonAppBar } from './ButtonAppBar';
+import { Home } from './features/main/Home';
+import { ButtonAppBar } from './components/Header/ButtonAppBar';
 
 function App() {
   return (

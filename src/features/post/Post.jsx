@@ -2,17 +2,17 @@ import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
-import { Twitter } from './providers/Twitter';
-import { Reddit } from './providers/Reddit';
-import Telegram from './providers/Telegram';
-import { Youtube } from './providers/Youtube';
-import { Image } from './providers/Image';
-import { Github } from './providers/Github';
-import { Video } from './providers/Video';
-import { Instagram } from './providers/Instagram';
+import { Twitter } from '../../components/providers/Twitter';
+import { Reddit } from '../../components/providers/Reddit';
+import Telegram from '../../components/providers/Telegram';
+import { Youtube } from '../../components/providers/Youtube';
+import { Image } from '../../components/providers/Image';
+import { Github } from '../../components/providers/Github';
+import { Video } from '../../components/providers/Video';
+import { Instagram } from '../../components/providers/Instagram';
 
-import { httpClient } from './httpClient';
-import { TagSelect } from './TsgSelect';
+import { httpClient } from '../../app/httpClient';
+import { TagSelect } from '../tag/TsgSelect';
 
 export const Post = ({ post, onDelete }) => {
   const providers = {
@@ -37,7 +37,6 @@ export const Post = ({ post, onDelete }) => {
   };
 
   const handleTagChange = (tags) => {
-    console.log(tags);
     httpClient
       .put(`/post/${post.id}`, {
         ...post,
@@ -50,9 +49,9 @@ export const Post = ({ post, onDelete }) => {
 
   return (
     <div>
-      <div style={{ display: 'flex' }}>
+      <div className="d-flex mb-20">
         <ComponentName href={post.href} />
-        <div>
+        <div className="ml-10">
           <div>
             <IconButton onClick={handleDelete}>
               <DeleteIcon />
